@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
+    <title>MPC-HC 网页控制器</title>
+    <link type="text/css" rel="stylesheet" href="src/mrcss.css" />
+    <link type="text/css" rel="stylesheet" href="src/mrcssdark.css" />
+    <script src="src/mrcssdark.js"></script>
+</head>
+<body>
+    <!-- 警告横幅 -->
+    <div id="warnBanner">
+     MPC-BE 使用了不是专为它设计的控制页，可能会导致功能无法使用或功能不同！请到<a href="https://github.com/little-Data/mpc-be-web-controller">https://github.com/little-Data/mpc-be-web-controller</a>获取专用版本
+    <button onclick="document.getElementById('warnBanner').style.display='none'">×</button>
+    <div style="clear:both;"></div>
+    </div>
+    <div class="container">
+        <!-- 视频预览区域 -->
+        <div class="preview-section">
+            <div class="preview-switch">
+                <input type="checkbox" id="previewSwitch" name="previewSwitch">
+                <label for="previewSwitch">开启视频预览</label>
+            </div>
+            <!-- 目标帧率 -->
+            <div class="preview-fps-row" id="previewFpsRow">
+                <label for="previewFpsInput">预览目标帧率</label>
+                <input type="number" id="previewFpsInput" min="1" value="25">
+                <span>fps</span>
+            </div>
+            <div class="preview-container" id="previewContainer">
+                <img id="previewImg" class="preview-img" src="" alt="视频预览">
+                <div class="preview-unavailable" id="previewUnavailable">视频预览不可用</div>
+            </div>
+        </div>
+
+        <div class="play-status-section">
+            <div class="status-title">
+                播放状态
+                <span class="window-title" id="windowTitle">未获取到播放器信息</span>
+            </div>
+            <div class="status-update-switch">
+                <input type="checkbox" id="autoUpdateStatus" checked>
+                <label for="autoUpdateStatus">实时更新状态</label>
+            </div>
+            <div class="progress-wrap">
+                <div class="progress-track" id="progressTrack">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <!-- 进度条悬停时间提示框 -->
+                <div class="progress-tooltip" id="progressTooltip"></div>
+                <div class="time-info">
+                    <span id="currentTime">00:00:00</span>
+                    <span id="totalTime">00:00:00</span>
+                </div>
+            </div>
+            <div class="status-info-row">
+                <div class="status-item">
+                    <span class="status-label">播放状态：</span>
+                    <span class="status-value" id="playStatus">未获取</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">静音状态：</span>
+                    <span class="status-value" id="muteStatus">未获取</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">音量：</span>
+                    <span class="status-value" id="volumeValue">0%</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">播放文件：</span>
+                    <span class="status-value file-path" id="filePath">未获取</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="fold-toolbar">
+        <button id="btnCollapseAll" class="fold-btn">全部折叠</button>
+        <button id="btnExpandAll" class="fold-btn">全部展开</button>
+        </div>
+
+        <div class="control-group">
+            <div class="group-title">基础播放控制</div>
+            <div class="controls">
+                <button class="control-btn success" data-command="887">播放</button>
+                <button class="control-btn" data-command="888">暂停</button>
+                <button class="control-btn secondary" data-command="890">停止</button>
+                <button class="control-btn" data-command="919">上一个</button>
+                <button class="control-btn" data-command="920">下一个</button>
+                <button class="control-btn" data-command="921">上一首</button>
+                <button class="control-btn" data-command="922">下一首</button>
+                <button class="control-btn" data-command="889">播放/暂停切换</button>
+                <button class="control-btn" data-command="996">跳到开头</button>
+            </div>
+        </div>
+
+
+        <div class="control-group" id="skipGroup">
+            <div class="group-title">跳过片头片尾</div>
+            <div class="controls">
+                <button class="control-btn success" id="btnAddSkipRule">＋ 添加规则</button>
+                <div id="skipRuleList"></div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="group-title">进度/速度控制</div>
+            <div class="controls">
+                <button class="control-btn" data-command="897">向后跳 (关键帧)</button>
+                <button class="control-btn" data-command="898">向前跳 (关键帧)</button>
+                <button class="control-btn" data-command="894">速度-</button>
+                <button class="control-btn" data-command="896">正常速度</button>
+                <button class="control-btn" data-command="895">速度+</button>
+                <button class="control-btn" data-command="891">单帧前进</button>
+                <button class="control-btn" data-command="892">单帧后退</button>
+                <button class="control-btn" data-command="893">转到</button>
+                <button class="control-btn" data-command="899">向后跳 (小)</button>
+                <button class="control-btn" data-command="900">向前跳 (小)</button>
+                <button class="control-btn" data-command="901">向后跳 (中)</button>
+                <button class="control-btn" data-command="902">向前跳 (中)</button>
+                <button class="control-btn" data-command="903">向后跳 (大)</button>
+                <button class="control-btn" data-command="904">向前跳 (大)</button>
+                <button class="control-btn" data-command="905">音频延迟+ 10ms</button>
+                <button class="control-btn" data-command="906">音频延迟- 10ms</button>
+                <button class="control-btn" data-command="960">音频延迟开关</button>
+                <button class="control-btn" data-command="33453">A-B循环重置</button>
+                <button class="control-btn" data-command="33454">A循环起点</button>
+                <button class="control-btn" data-command="33455">B循环起点</button>
+                <div class="jump-time-wrap">
+                    <input type="text" id="jumpTimeInput" class="jump-time-input" placeholder="点此输入">
+                    <button class="control-btn jump-btn" id="jumpTimeBtn">跳转到时间点</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group folded">
+            <div class="group-title">音频/字幕控制</div>
+            <div class="controls">
+                <button class="control-btn" data-command="908">音量-</button>
+                <button class="control-btn" data-command="907">音量+</button>
+                <button class="control-btn" data-command="909">静音</button>
+                <button class="control-btn" data-command="956">隐藏/显示字幕</button>
+                <button class="control-btn" data-command="910">取消静音</button>
+                <button class="control-btn" data-command="970">增益+</button>
+                <button class="control-btn" data-command="971">增益-</button>
+                <button class="control-btn" data-command="972">关闭增益</button>
+                <button class="control-btn" data-command="994">音频归一化</button>
+                <button class="control-btn" data-command="809">加载字幕</button>
+                <button class="control-btn" data-command="810">保存字幕</button>
+                <button class="control-btn" data-command="24000">字幕延迟-</button>
+                <button class="control-btn" data-command="24001">字幕延迟+</button>
+                <button class="control-btn" data-command="24053">字幕上移</button>
+                <button class="control-btn" data-command="24052">字幕下移</button>
+                <button class="control-btn" data-command="24054">字幕字号-</button>
+                <button class="control-btn" data-command="24055">字幕字号+</button>
+            </div>
+        </div>
+        
+        <div class="control-group folded">
+            <div class="group-title">播放模式</div>
+            <div class="controls">
+                <button class="control-btn" data-command="33449">循环播放</button>
+                <button class="control-btn" data-command="33450">重复模式: 文件</button>
+                <button class="control-btn" data-command="33451">重复模式: 播放列表</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="group-title">文件操作</div>
+            <div class="controls">
+                <button class="control-btn success" onclick="window.location.href='/browser.html'">浏览文件</button>
+                <button class="control-btn" data-command="969">打开文件</button>
+                <button class="control-btn" data-command="800">打开文件/URL</button>
+                <button class="control-btn" data-command="801">打开DVD</button>
+                <button class="control-btn" data-command="802">打开采集设备</button>
+                <button class="control-btn" data-command="803">关闭媒体</button>
+                <button class="control-btn" data-command="804">关闭播放列表</button>
+                <button class="control-btn" data-command="805">另存副本</button>
+                <button class="control-btn" data-command="806">保存图像</button>
+                <button class="control-btn" data-command="807">保存图像（自动）</button>
+                <button class="control-btn" data-command="808">保存缩略图</button>
+                <button class="control-btn" data-command="976">重新打开</button>
+                <button class="control-btn" data-command="33208">打开文件夹</button>
+                <button class="control-btn" data-command="814">文件属性</button>
+                <button class="control-btn" data-command="950">文件菜单（完整）</button>
+                <button class="control-btn secondary" data-command="816">退出程序</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="group-title">视频窗口控制</div>
+            <div class="controls">
+                <button class="control-btn" data-command="830">全屏</button>
+                <button class="control-btn" data-command="831">全屏（不改分辨率）</button>
+                <button class="control-btn" data-command="813">缩放25%</button>
+                <button class="control-btn" data-command="832">缩放50%</button>
+                <button class="control-btn" data-command="833">缩放100%</button>
+                <button class="control-btn" data-command="834">缩放200%</button>
+                <button class="control-btn" data-command="968">自动适应窗口</button>
+                <button class="control-btn" data-command="861">重置视频窗口</button>
+                <button class="control-btn" data-command="862">增大画面</button>
+                <button class="control-btn" data-command="863">减小画面</button>
+                <button class="control-btn" data-command="859">下一个比例预设</button>
+            </div>
+        </div>
+
+        <div class="control-group folded">
+            <div class="group-title">画面平移/缩放</div>
+            <div class="controls">
+                <button class="control-btn" data-command="868">左移</button>
+                <button class="control-btn" data-command="869">右移</button>
+                <button class="control-btn" data-command="870">上移</button>
+                <button class="control-btn" data-command="871">下移</button>
+                <button class="control-btn" data-command="876">居中</button>
+                <button class="control-btn" data-command="880">水平镜像</button>
+                <button class="control-btn" data-command="881">逆时针旋转</button>
+                <button class="control-btn" data-command="882">顺时针旋转</button>
+            </div>
+        </div>
+
+        <div class="control-group folded">
+            <div class="group-title">窗口置顶</div>
+            <div class="controls">
+                <button class="control-btn" data-command="883">从不置顶</button>
+                <button class="control-btn" data-command="884">总在最前</button>
+                <button class="control-btn" data-command="885">播放时置顶</button>
+                <button class="control-btn" data-command="886">播放视频时置顶</button>
+            </div>
+        </div>
+
+        <div class="control-group folded">
+            <div class="group-title">色彩调节</div>
+            <div class="controls">
+                <button class="control-btn" data-command="984">亮度+</button>
+                <button class="control-btn" data-command="985">亮度-</button>
+                <button class="control-btn" data-command="986">对比度+</button>
+                <button class="control-btn" data-command="987">对比度-</button>
+                <button class="control-btn" data-command="988">色调+</button>
+                <button class="control-btn" data-command="989">色调-</button>
+                <button class="control-btn" data-command="990">饱和度+</button>
+                <button class="control-btn" data-command="991">饱和度-</button>
+                <button class="control-btn" data-command="992">重置色彩</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="group-title">流切换</div>
+            <div class="controls">
+                <button class="control-btn" data-command="952">下一音频流</button>
+                <button class="control-btn" data-command="953">上一音频流</button>
+                <button class="control-btn" data-command="954">下一字幕流</button>
+                <button class="control-btn" data-command="955">上一字幕流</button>
+            </div>
+        </div>
+
+        <div class="control-group folded">
+            <div class="group-title">软件界面</div>
+            <div class="controls">
+                <button class="control-btn" data-command="817">切换界面样式</button>
+                <button class="control-btn" data-command="818">切换进度栏</button>
+                <button class="control-btn" data-command="819">切换按钮</button>
+                <button class="control-btn" data-command="820">切换信息栏</button>
+                <button class="control-btn" data-command="821">切换统计栏</button>
+                <button class="control-btn" data-command="822">切换状态栏</button>
+                <button class="control-btn" data-command="823">切换字幕同步栏</button>
+                <button class="control-btn" data-command="824">切换播放列表栏</button>
+                <button class="control-btn" data-command="825">切换捕获栏</button>
+                <button class="control-btn" data-command="826">切换着色器编辑栏</button>
+                <button class="control-btn" data-command="827">最小视图</button>
+                <button class="control-btn" data-command="828">紧凑视图</button>
+                <button class="control-btn" data-command="829">普通视图</button>
+            </div>
+        </div>
+
+        <div class="control-group folded">
+            <div class="group-title">杂项控制</div>
+            <div class="controls">
+                <button class="control-btn" data-command="944">Boss键（一键隐藏）</button>
+                <button class="control-btn" data-command="938">添加到收藏</button>
+                <button class="control-btn" data-command="975">快速添加至收藏</button>
+                <button class="control-btn" data-command="974">调谐扫描</button>
+                <button class="control-btn" data-command="943">关于</button>
+                <button class="control-btn" data-command="41321">检查更新</button>
+                <button class="control-btn secondary" id="btnClearStorage">清除本页LocalStorage</button>
+                <button class="control-btn" onclick="window.location.href='/player.html'">播放器页面</button>
+                <div class="url-set-line">
+                    <label>控制地址</label>
+                    <input id="customUrlInput" type="text" placeholder="默认为当前地址">
+                    <button id="btnSetUrl" class="control-btn secondary">设置</button>
+                </div>
+                <button class="control-btn theme-toggle-btn" id="themeToggleBtn">☀️ 浅色模式</button>
+                <span class="auto-theme-indicator" id="autoThemeIndicator"></span>
+            </div>
+
+        </div>
+        
+        <div class="control-group folded" id="customGroup">
+            <div class="group-title">自定义命令</div>
+            <div id="customControls">
+                <button class="control-btn success" id="btnAddCustom">＋ 新增命令</button>
+                <div class="custom-bar">
+                    <button class="control-btn" id="btnExportCustom">导出 JSON</button>
+                    <label class="control-btn">
+                        导入 JSON
+                        <input type="file" id="inpImportCustom" accept=".json">
+                    </label>
+                </div>
+                <div id="customCards"></div>
+            </div>
+        </div>
+
+        <!-- 命令弹窗 -->
+        <div class="modal" id="customModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>新增自定义命令</h4>
+                    <span class="modal-close" id="modalClose">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <label>名称
+                        <input type="text" id="custName">
+                    </label>
+                    <label>命令 ID
+                        <input type="number" id="custId" placeholder="887">
+                    </label>
+                    <label>请求方式
+                        <select id="custMethod">
+                            <option value="POST">POST</option>
+                            <option value="GET">GET</option>
+                        </select>
+                    </label>
+
+                    <!-- 高级折叠 -->
+                    <div class="advanced-toggle" id="advancedToggle">高级</div>
+                    <div class="advanced-panel" id="advancedPanel" style="display:none;"><!-- 如果删除/或此style会导致高级折叠区域要点两次 -->
+                        <label>自定义接口（留空使用默认）
+                            <input type="text" id="custApi" placeholder="/command.html">
+                        </label>
+                        <label>自定义参数（填此项则命令 ID 无效）
+                            <textarea id="custParams" rows="2"></textarea>
+                            <label>POST示例：wm_command=969&null=0<br/>GET示例：?wm_command=-1&percent=50<br/>GET需以?开头</label>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="control-btn secondary" id="btnCancel">取消</button>
+                    <button class="control-btn success" id="btnSave">保存</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="status" id="statusText">就绪 - 等待指令操作</div>
+        [debug]
+
+        <!-- 完整文件路径查看浮层 -->
+        <div class="path-modal" id="pathModal">
+            <div class="path-content">
+                <div class="path-header">
+                    <h3>完整播放文件路径</h3>
+                    <button class="path-close" id="pathClose">×</button>
+                </div>
+                <div class="path-text" id="pathText"></div>
+            </div>
+        </div>
+        <!-- 回到顶部按钮 -->
+        <button id="backToTop" class="back-to-top" title="回到顶部">↑</button>
+        <footer class="page-footer">
+            HAF半个水果 <a href="https://github.com/little-Data/mpc-hc-web-controller">https://github.com/little-Data/mpc-hc-web-controller</a>
+        </footer>
+        <script src="src/tools.js"></script>
+        <script src="src/skip.js"></script>
+    </div>
+</body>
+</html>

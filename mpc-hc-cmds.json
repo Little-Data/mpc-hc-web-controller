@@ -1,0 +1,639 @@
+[
+  {
+    "name": "移动到回收站",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24044"
+  },
+  {
+    "name": "下载字幕...",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "812"
+  },
+  {
+    "name": "打开文件位置",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "20066"
+  },
+  {
+    "name": "整理收藏夹",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "937"
+  },
+  {
+    "name": "切换导航栏",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33415"
+  },
+  {
+    "name": "启用重绘尺寸前的像素着色器",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "998"
+  },
+  {
+    "name": "启用重绘尺寸后的像素着色器",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "999"
+  },
+  {
+    "name": "开关默认样式覆盖",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24051"
+  },
+  {
+    "name": "自动缩放 (仅放大)",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "4900"
+  },
+  {
+    "name": " 窗口缩放 +",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33457"
+  },
+  {
+    "name": " 窗口缩放 -",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33456"
+  },
+  {
+    "name": "视频画面半数尺寸",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "835"
+  },
+  {
+    "name": "视频画面普通尺寸",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "836"
+  },
+  {
+    "name": "视频画面双倍尺寸",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "837"
+  },
+  {
+    "name": "视频画面拉伸",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "838"
+  },
+  {
+    "name": "视频画面向内对齐",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "839"
+  },
+  {
+    "name": "视频画面缩放 1",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "841"
+  },
+  {
+    "name": "视频画面缩放 2",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "842"
+  },
+  {
+    "name": "视频画面向外对齐",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "840"
+  },
+  {
+    "name": "视频画面切换缩放",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "843"
+  },
+  {
+    "name": "视频画面增加宽度",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "864"
+  },
+  {
+    "name": "视频画面增加高度",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "866"
+  },
+  {
+    "name": "视频画面减小宽度",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "865"
+  },
+  {
+    "name": "视频画面减小高度",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "867"
+  },
+  {
+    "name": "视频画面向左上移动",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "872"
+  },
+  {
+    "name": "视频画面向右上移动",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "873"
+  },
+  {
+    "name": "视频画面向左下移动",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "874"
+  },
+  {
+    "name": "视频画面向右下移动",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "875"
+  },
+  {
+    "name": "视频画面绕 X 轴向正方向旋转",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "877"
+  },
+  {
+    "name": "视频画面绕 X 轴向负方向旋转",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "878"
+  },
+  {
+    "name": "视频画面绕 Y 轴向正方向旋转",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "879"
+  },
+  {
+    "name": "视频画面绕 Z 轴向正方向旋转（2度）",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "1000"
+  },
+  {
+    "name": "最大音量推进",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "973"
+  },
+  {
+    "name": "切换自定义声道映射",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "993"
+  },
+  {
+    "name": "切换增益音量",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "995"
+  },
+  {
+    "name": "DVD 标题菜单",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "923"
+  },
+  {
+    "name": "DVD 根菜单",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "924"
+  },
+  {
+    "name": "DVD 字幕菜单",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "925"
+  },
+  {
+    "name": "DVD 音频菜单",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "926"
+  },
+  {
+    "name": "DVD 视角菜单",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "927"
+  },
+  {
+    "name": "DVD 章节菜单",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "928"
+  },
+  {
+    "name": "DVD 菜单左",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "929"
+  },
+  {
+    "name": "DVD 菜单右",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "930"
+  },
+  {
+    "name": "DVD 菜单上",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "931"
+  },
+  {
+    "name": "DVD 菜单下",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "932"
+  },
+  {
+    "name": "DVD 菜单激活",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "933"
+  },
+  {
+    "name": "DVD 菜单返回",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "934"
+  },
+  {
+    "name": "DVD 菜单离开",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "935"
+  },
+  {
+    "name": "播放器菜单",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "949"
+  },
+  {
+    "name": "滤镜菜单",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "951"
+  },
+  {
+    "name": "选项",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "815"
+  },
+  {
+    "name": "重新装载字幕",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "2302"
+  },
+  {
+    "name": "下一视角 (DVD)",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "961"
+  },
+  {
+    "name": "上一视角 (DVD)",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "962"
+  },
+  {
+    "name": "下一条音频轨 (DVD)",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "963"
+  },
+  {
+    "name": "上一条音频轨 (DVD)",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "964"
+  },
+  {
+    "name": "下一个字幕轨 (DVD)",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "965"
+  },
+  {
+    "name": "上一个字幕轨 (DVD)",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "966"
+  },
+  {
+    "name": "开/关字幕 (DVD)",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "967"
+  },
+  {
+    "name": "撕裂测试",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32769"
+  },
+  {
+    "name": "OSD: 显示当前时间",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32778"
+  },
+  {
+    "name": "OSD: 显示文件名",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32777"
+  },
+  {
+    "name": "下一个着色器预设",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "57382"
+  },
+  {
+    "name": "上一个着色器预设",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "57384"
+  },
+  {
+    "name": "切换 Direct3D 全屏幕",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32779"
+  },
+  {
+    "name": "转到上一个字幕",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32780"
+  },
+  {
+    "name": "转到下一个字幕",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32781"
+  },
+  {
+    "name": "字幕时移-100ms",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32782"
+  },
+  {
+    "name": "字幕时移+100ms",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32783"
+  },
+  {
+    "name": "OSD: 显示渲染器统计",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32784"
+  },
+  {
+    "name": "OSD: 重置渲染器统计",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32785"
+  },
+  {
+    "name": "垂直同步",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33243"
+  },
+  {
+    "name": "开启帧计时修正",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33265"
+  },
+  {
+    "name": "精确垂直同步",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33260"
+  },
+  {
+    "name": "减少垂直同步偏移",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33246"
+  },
+  {
+    "name": "增加垂直同步偏移",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33247"
+  },
+  {
+    "name": "回放结束后: 什么都不做",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "948"
+  },
+  {
+    "name": "回放结束后: 播放文件夹中的下一个文件",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "947"
+  },
+  {
+    "name": "回放结束后: 关闭显示器",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "918"
+  },
+  {
+    "name": "回放结束后: 退出",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "912"
+  },
+  {
+    "name": "回放结束后: 待机",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "913"
+  },
+  {
+    "name": "回放结束后: 休眠",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "914"
+  },
+  {
+    "name": "回放结束后: 关机",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "915"
+  },
+  {
+    "name": "回放结束后: 注销",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "916"
+  },
+  {
+    "name": "回放结束后: 锁定",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "917"
+  },
+  {
+    "name": "切换 EDL 窗口",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "846"
+  },
+  {
+    "name": "EDL 输入",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "847"
+  },
+  {
+    "name": "EDL 输出",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "848"
+  },
+  {
+    "name": "EDL 新剪辑",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "849"
+  },
+  {
+    "name": "EDL 保存",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "860"
+  },
+  {
+    "name": "切换播放列表乱序播放",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "5030"
+  }
+]

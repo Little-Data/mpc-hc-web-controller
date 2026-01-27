@@ -1,0 +1,291 @@
+/* 深色模式样式变量 */
+:root[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-tertiary: #3a3a3a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-tertiary: #888888;
+    --border-color: #404040;
+    --accent-color: #4a9eff;
+    --accent-hover: #357abd;
+    --success-color: #28a745;
+    --success-hover: #1e7e34;
+    --secondary-color: #6c757d;
+    --secondary-hover: #545b62;
+    --danger-color: #dc3545;
+    --danger-hover: #c82333;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --progress-bar: #4a9eff;
+    --progress-track: #404040;
+    --modal-bg: #2d2d2d;
+    --modal-text: #e0e0e0;
+    --input-bg: #3a3a3a;
+    --input-text: #e0e0e0;
+    --input-border: #404040;
+    --button-text: #ffffff;
+    --preview-bg: #000000;
+    --status-bg: #2d2d2d;
+    --status-border: #404040;
+    --path-modal-bg: rgba(0, 0, 0, 0.8);
+}
+
+/* 深色模式全局样式 */
+[data-theme="dark"] body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .container {
+    background: var(--bg-secondary);
+    box-shadow: 0 2px 15px var(--shadow-color);
+}
+
+[data-theme="dark"] .preview-switch,
+[data-theme="dark"] .status-update-switch {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .preview-container {
+    border-color: var(--border-color);
+    background: var(--preview-bg);
+}
+
+[data-theme="dark"] .play-status-section {
+    background: var(--status-bg);
+    border-color: var(--status-border);
+}
+
+[data-theme="dark"] .status-title {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .window-title {
+    color: var(--text-tertiary);
+}
+
+[data-theme="dark"] .progress-track {
+    background: var(--progress-track);
+}
+
+[data-theme="dark"] .progress-bar {
+    background: var(--progress-bar);
+}
+
+[data-theme="dark"] .time-info {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .status-info-row {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .status-label {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .status-value {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .status-value.file-path {
+    color: var(--accent-color);
+}
+
+[data-theme="dark"] .control-group {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .group-title {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .control-btn {
+    background-color: var(--accent-color);
+    color: var(--button-text);
+}
+
+[data-theme="dark"] .control-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+[data-theme="dark"] .control-btn.secondary {
+    background-color: var(--secondary-color);
+}
+
+[data-theme="dark"] .control-btn.secondary:hover {
+    background-color: var(--secondary-hover);
+}
+
+[data-theme="dark"] .control-btn.success {
+    background-color: var(--success-color);
+}
+
+[data-theme="dark"] .control-btn.success:hover {
+    background-color: var(--success-hover);
+}
+
+[data-theme="dark"] .jump-time-input {
+    background: var(--input-bg);
+    color: var(--input-text);
+    border-color: var(--input-border);
+}
+
+[data-theme="dark"] .jump-time-input:focus {
+    background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .status {
+    color: var(--text-secondary);
+    background: var(--status-bg);
+}
+
+[data-theme="dark"] .fold-btn {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .fold-btn:hover {
+    background: var(--bg-secondary);
+    border-color: var(--text-secondary);
+}
+
+[data-theme="dark"] .custom-card {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .modal {
+    background: var(--path-modal-bg);
+}
+
+[data-theme="dark"] .modal-content {
+    background: var(--modal-bg);
+    color: var(--modal-text);
+}
+
+[data-theme="dark"] .modal-header {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .modal-close {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .modal-body label {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .modal-body input,
+[data-theme="dark"] .modal-body select,
+[data-theme="dark"] .modal-body textarea {
+    background: var(--input-bg);
+    color: var(--input-text);
+    border-color: var(--input-border);
+}
+
+[data-theme="dark"] .path-modal {
+    background: var(--path-modal-bg);
+}
+
+[data-theme="dark"] .path-content {
+    background: var(--modal-bg);
+    color: var(--modal-text);
+}
+
+[data-theme="dark"] .path-header {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .path-close {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .path-text {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .page-footer {
+    background: var(--bg-secondary);
+    border-top-color: var(--border-color);
+    color: var(--text-tertiary);
+}
+
+[data-theme="dark"] .back-to-top {
+    background-color: var(--accent-color);
+    color: var(--button-text);
+}
+
+[data-theme="dark"] .back-to-top:hover {
+    background-color: var(--accent-hover);
+}
+
+[data-theme="dark"] .advanced-toggle {
+    color: var(--accent-color);
+}
+
+[data-theme="dark"] #warnBanner {
+    background: #4a4a2a;
+    color: #dadaa0;
+    border-bottom-color: #5a5a3a;
+}
+
+[data-theme="dark"] #warnBanner button {
+    color: #dadaa0;
+}
+
+/* 主题切换按钮样式 */
+.theme-toggle-btn {
+    background: linear-gradient(45deg, #ffd700 50%, #4a4a4a 50%);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-toggle-btn::before {
+    content: "🌞";
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease;
+}
+
+.theme-toggle-btn::after {
+    content: "🌙";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+[data-theme="dark"] .theme-toggle-btn::before {
+    opacity: 0;
+}
+
+[data-theme="dark"] .theme-toggle-btn::after {
+    opacity: 1;
+}
+
+/* 自动模式指示器 */
+.auto-theme-indicator {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-left: 8px;
+}
+
+/* 响应式深色模式调整 */
+@media (max-width: 768px) {
+    [data-theme="dark"] .control-btn {
+        background-color: var(--accent-color);
+    }
+    
+    [data-theme="dark"] .jump-time-input {
+        background: var(--input-bg);
+        color: var(--input-text);
+    }
+}

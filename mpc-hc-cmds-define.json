@@ -1,0 +1,331 @@
+[
+  {
+    "name": "保持高宽比差异",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "845"
+  },
+  {
+    "name": "禁用静音",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "911"
+  },
+  {
+    "name": "主页",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "939"
+  },
+  {
+    "name": "捐赠",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "940"
+  },
+  {
+    "name": "命令行开关",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "941"
+  },
+  {
+    "name": "工具栏图片",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "942"
+  },
+  {
+    "name": "旋转 270°",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "997"
+  },
+  {
+    "name": "全屏按钮",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "1001"
+  },
+  {
+    "name": "播放列表按钮",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "1002"
+  },
+  {
+    "name": "随机播放",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "1003"
+  },
+  {
+    "name": "循环播放",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "1004"
+  },
+  {
+    "name": "强制输入高色深",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24028"
+  },
+  {
+    "name": "全浮点处理",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24029"
+  },
+  {
+    "name": "色彩管理启用",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24030"
+  },
+  {
+    "name": "色彩管理输入自动",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24031"
+  },
+  {
+    "name": "色彩管理输入 HDTV",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24032"
+  },
+  {
+    "name": "色彩管理输入 SDTV NTSC",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24033"
+  },
+  {
+    "name": "色彩管理输入 SDTV PAL",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24034"
+  },
+  {
+    "name": "色彩管理环境光明亮",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24035"
+  },
+  {
+    "name": "色彩管理环境光昏暗",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24037"
+  },
+  {
+    "name": "色彩管理环境光黑暗",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24038"
+  },
+  {
+    "name": "色彩管理意图感知",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24039"
+  },
+  {
+    "name": "色彩管理相对比色",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24040"
+  },
+  {
+    "name": "色彩管理意图饱和度",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24041"
+  },
+  {
+    "name": "色彩管理意图绝对比色",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24042"
+  },
+  {
+    "name": "半浮点处理",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24043"
+  },
+  {
+    "name": "MPC 主题",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "24045"
+  },
+  {
+    "name": "打开光盘",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32774"
+  },
+  {
+    "name": "着色器",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "32775"
+  },
+  {
+    "name": "垂直同步偏移",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33245"
+  },
+  {
+    "name": "高色深分辨率",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33264"
+  },
+  {
+    "name": "EVR 输出范围",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33269"
+  },
+  {
+    "name": "EVR 输出范围 0-255",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33273"
+  },
+  {
+    "name": "EVR 输出范围 16-235",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33274"
+  },
+  {
+    "name": "最近文件",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33281"
+  },
+  {
+    "name": "清空最近文件",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33282"
+  },
+  {
+    "name": "GPU 垂直同步前刷新",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33286"
+  },
+  {
+    "name": "GPU 呈现后刷新",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33287"
+  },
+  {
+    "name": "GPU 等待刷新",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33288"
+  },
+  {
+    "name": "D3D 全屏",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33289"
+  },
+  {
+    "name": "禁用桌面组合",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33290"
+  },
+  {
+    "name": "备用垂直同步",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33291"
+  },
+  {
+    "name": "重置为默认",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33292"
+  },
+  {
+    "name": "重置为最佳",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33293"
+  },
+  {
+    "name": "同步视频",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33408"
+  },
+  {
+    "name": "同步显示",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33409"
+  },
+  {
+    "name": "同步最近",
+    "method": "POST",
+    "api": "/command.html",
+    "params": "",
+    "id": "33410"
+  }
+]

@@ -1,0 +1,1071 @@
+/* ========== CSS变量定义 - 支持主题切换 ========== */
+:root {
+    /* 背景色 */
+    --bg-primary: #f5f5f5;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f8f9fa;
+
+    /* 文字颜色 */
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --text-tertiary: #888888;
+
+    /* 边框颜色 */
+    --border-color: #eeeeee;
+    --border-color-light: #ddd;
+
+    /* 主题色 */
+    --accent-color: #007bff;
+    --accent-hover: #0056b3;
+    --success-color: #28a745;
+    --success-hover: #1e7e34;
+    --secondary-color: #6c757d;
+    --secondary-hover: #545b62;
+    --danger-color: #dc3545;
+    --danger-hover: #c82333;
+
+    /* 阴影 */
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --shadow-hover: rgba(0, 0, 0, 0.15);
+
+    /* 进度条 */
+    --progress-bar: #007bff;
+    --progress-track: #dee2e6;
+
+    /* 弹窗 */
+    --modal-bg: #ffffff;
+    --modal-text: #333333;
+    --modal-overlay: rgba(0, 0, 0, 0.7);
+
+    /* 输入框 */
+    --input-bg: #ffffff;
+    --input-text: #333333;
+    --input-border: #dddddd;
+    --input-focus: #007bff;
+
+    /* 按钮 */
+    --button-text: #ffffff;
+
+    /* 预览区域 */
+    --preview-bg: #000000;
+    --preview-border: #eeeeee;
+
+    /* 状态区域 */
+    --status-bg: #f8f9fa;
+    --status-border: #eeeeee;
+
+    /* 路径弹窗 */
+    --path-modal-bg: rgba(0, 0, 0, 0.7);
+
+    /* 警告横幅 */
+    --warn-bg: #fff3cd;
+    --warn-text: #856404;
+    --warn-border: #ffeaa7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/*警告横幅*/
+#warnBanner {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    padding: 8px 12px;
+    background: #fff3cd;
+    color: #856404;
+    border-bottom: 1px solid #ffeaa7;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+#warnBanner button {
+    float: right;
+    border: none;
+    background: transparent;
+    color: #856404;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--bg-secondary);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px var(--shadow-color);
+}
+
+/* 预览区域样式 - 包含开关和预览容器 */
+.preview-section {
+    margin-bottom: 25px;
+}
+
+.preview-switch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.preview-switch input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.preview-container {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid var(--preview-border);
+    background: var(--preview-bg);
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: none;
+    /* 初始隐藏，开启预览后显示 */
+}
+
+.preview-unavailable {
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    padding: 20px;
+    display: none;
+}
+
+/* 播放状态展示区域样式 */
+.play-status-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: var(--status-bg);
+    border-radius: 8px;
+    border: 1px solid var(--status-border);
+}
+
+.status-update-switch {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+.status-update-switch #autoUpdateStatus {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.status-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.window-title {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 100px;
+    /* 避免挤压过窄 */
+}
+
+/* 进度条样式 + 悬停提示样式 */
+.progress-wrap {
+    width: 100%;
+    margin-bottom: 15px;
+    position: relative;
+    /* 作为提示框的定位容器 */
+}
+
+.progress-track {
+    width: 100%;
+    height: 8px;
+    background: var(--progress-track);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--progress-bar);
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.2s ease;
+}
+
+/* 进度条悬停时间提示 */
+.progress-tooltip {
+    position: absolute;
+    top: -30px;
+    /* 提示框在进度条上方 */
+    padding: 2px 6px;
+    background: #333;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+    pointer-events: none;
+    /* 不遮挡点击事件 */
+    display: none;
+    /* 默认隐藏 */
+    z-index: 10;
+}
+
+/* 提示框小三角 */
+.progress-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 4px 4px 0;
+    border-style: solid;
+    border-color: #333 transparent transparent;
+}
+
+.time-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+/* 状态信息行样式 */
+.status-info-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 15px;
+    /* 垂直/水平间距分离 */
+    align-items: flex-start;
+    /* 多行文本对齐 */
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.status-item {
+    display: flex;
+    align-items: flex-start;
+    /* 标签和值对齐 */
+    gap: 5px;
+    flex: 1 1 calc(50% - 7.5px);
+    /* 小屏2列布局 */
+    min-width: 120px;
+    /* 最小宽度限制 */
+    position: relative;
+    /* 作为路径浮层的定位容器 */
+}
+
+.status-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+    white-space: nowrap;
+    /* 标签不换行 */
+}
+
+.status-value {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+    color: var(--text-primary);
+}
+
+.status-value.file-path {
+    flex: 1;
+    max-width: none;
+    color: var(--accent-color);
+    white-space: normal;
+    /* 允许换行 */
+    word-break: break-all;
+    /* 长路径自动断词 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    /* 最多2行 */
+    -webkit-box-orient: vertical;
+    line-height: 1.4;
+    /* 优化行高 */
+    cursor: pointer;
+    /* 提示可点击 */
+}
+
+/* 完整文件路径浮层样式 - 适配PC+移动端 */
+.path-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--path-modal-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    /* 最高层级，不被遮挡 */
+    padding: 20px;
+    display: none;
+    /* 默认隐藏 */
+}
+
+.path-content {
+    background: var(--modal-bg);
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    /* 超长路径滚动显示 */
+}
+
+.path-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.path-header h3 {
+    font-size: 16px;
+    color: var(--modal-text);
+    font-weight: 600;
+    margin: 0;
+}
+
+.path-close {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: var(--bg-tertiary);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--text-secondary);
+}
+
+.path-text {
+    font-size: 14px;
+    color: var(--modal-text);
+    line-height: 1.6;
+    word-break: break-all;
+    /* 强制断词，适配长路径 */
+    white-space: pre-wrap;
+    /* 保留路径格式 */
+}
+
+/* 控制组样式 */
+.control-group {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.control-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.group-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--accent-color);
+    color: var(--button-text);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    flex: 0 0 auto;
+}
+
+.control-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.control-btn.secondary {
+    background-color: var(--secondary-color);
+}
+
+.control-btn.secondary:hover {
+    background-color: var(--secondary-hover);
+}
+
+.control-btn.success {
+    background-color: var(--success-color);
+}
+
+.control-btn.success:hover {
+    background-color: var(--success-hover);
+}
+
+/* 状态提示 */
+.status {
+    margin-top: 15px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    padding: 8px 12px;
+    background: var(--status-bg);
+    border-radius: 4px;
+}
+
+/* 按钮加载动画 */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading::after {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 8px;
+    border: 2px solid var(--button-text);
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* 响应式适配：平板/手机 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .play-status-section {
+        padding: 15px;
+    }
+
+    .control-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .progress-track {
+        height: 10px;
+        /* 移动端进度条稍粗，方便触摸 */
+    }
+
+    .progress-tooltip {
+        top: -35px;
+        /* 移动端提示框稍上移，避免遮挡 */
+        font-size: 13px;
+        padding: 3px 8px;
+    }
+
+    .status-item {
+        flex: 1 1 100%;
+        /* 移动端改为1列布局，更易点击 */
+    }
+
+    .path-content {
+        padding: 15px;
+    }
+
+    .path-header h3 {
+        font-size: 15px;
+    }
+
+    .path-text {
+        font-size: 13px;
+    }
+}
+
+/* 响应式适配：手机超小屏 */
+@media (max-width: 576px) {
+    .time-info {
+        font-size: 13px;
+    }
+
+    .status-title {
+        font-size: 15px;
+    }
+
+    .group-title {
+        font-size: 15px;
+    }
+}
+
+/* 跳转到时间点 - 圆角容器样式 */
+.jump-time-wrap {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    overflow: hidden;
+    /* 保证子元素圆角贴合容器 */
+    flex: 0 0 auto;
+}
+
+.jump-time-input {
+    padding: 10px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 0;
+    flex: 0 0 120px;
+    outline: none;
+    transition: background-color 0.2s;
+    background: var(--input-bg);
+    color: var(--input-text);
+}
+
+.jump-time-input:focus {
+    border-color: transparent;
+    background-color: var(--bg-tertiary);
+}
+
+/* 调整跳转按钮样式，去掉圆角，融入容器 */
+#jumpTimeBtn {
+    border-radius: 0 !important;
+    /* 取消自身圆角 */
+    border-left: 1px solid var(--input-border);
+    /* 分隔线 */
+    flex: 0 0 auto;
+    margin: 0 !important;
+    /* 清除默认间距 */
+}
+
+/* 响应式适配：移动端调整 */
+@media (max-width: 768px) {
+    .jump-time-wrap {
+        width: 100%;
+        /* 窄屏占满父容器宽度 */
+        max-width: none;
+        /* 移除最大宽度限制，适配任意窄屏 */
+        margin-top: 8px;
+        /* 与其他按钮分开，避免拥挤 */
+    }
+
+    .jump-time-input {
+        flex: 1;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    #jumpTimeBtn {
+        padding: 8px 12px;
+        font-size: 13px;
+        white-space: nowrap;
+        /* 按钮文字不换行 */
+    }
+}
+
+/* 折叠工具栏 */
+.fold-toolbar {
+    display: flex;
+    gap: 8px;
+    margin: 12px 0 20px;
+}
+
+.fold-btn {
+    padding: 6px 14px;
+    font-size: 13px;
+    border: 1px solid var(--border-color-light);
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.fold-btn:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--text-secondary);
+}
+
+/* 折叠核心 */
+.control-group.folded .controls {
+    display: none;
+    /* 折叠时隐藏按钮区 */
+}
+
+/* 自定义命令 */
+.control-group.folded #customControls {
+    display: none;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px
+}
+
+.custom-bar {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.custom-bar .control-btn input {
+    display: none;
+}
+
+.customCards {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.group-title {
+    cursor: pointer;
+    /* 标题即折叠手柄 */
+    user-select: none;
+    /* 禁止拖选文字 */
+    position: relative;
+    padding-left: 1.2em;
+    /* 给箭头留空 */
+}
+
+.group-title::before {
+    content: "▼";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform .2s;
+}
+
+.control-group.folded .group-title::before {
+    transform: translateY(-50%) rotate(-90deg);
+}
+
+.preview-fps-row {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+.preview-fps-row #previewFpsInput {
+    width: 60px;
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* 自定义命令卡片 */
+.custom-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid var(--border-color-light);
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    font-size: 13px;
+    white-space: nowrap;
+    color: var(--text-primary);
+}
+
+.custom-card .btn-send {
+    padding: 4px 8px;
+}
+
+.custom-card .btn-del {
+    padding: 2px 6px;
+    font-size: 12px;
+    background: var(--danger-color);
+}
+
+.custom-card .btn-del:hover {
+    background: var(--danger-hover);
+}
+
+/* 命令弹窗 */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: var(--modal-overlay);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.modal-content {
+    background: var(--modal-bg);
+    border-radius: 6px;
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    color: var(--modal-text);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.modal-close {
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.modal-body label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--modal-text);
+}
+
+.modal-body input,
+.modal-body select,
+.modal-body textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 4px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    font-size: 14px;
+    background: var(--input-bg);
+    color: var(--input-text);
+}
+
+.modal-footer {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.modal-footer button {
+    margin-left: 8px;
+}
+
+/* 高级折叠 */
+.advanced-toggle {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--accent-color);
+    cursor: pointer;
+    user-select: none;
+}
+
+.advanced-toggle.open::before {
+    content: "▼ ";
+}
+
+.advanced-toggle::before {
+    content: "▶ ";
+}
+
+.advanced-panel {
+    margin-top: 8px;
+    padding-left: 1.2em;
+}
+
+.advanced-panel label {
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: var(--modal-text);
+}
+
+.advanced-panel textarea {
+    width: 100%;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 13px;
+    padding: 6px 8px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background: var(--input-bg);
+    color: var(--input-text);
+}
+
+/* 跳过片头片尾 & 自定义命令 */
+/* 通用：让按钮区允许换行 */
+#skipControls,
+#customControls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* 通用：卡片本身也允许自动换行 */
+#skipRuleList {
+    width: 100%;
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+#customControls {
+    width: 100%;
+}
+
+/* 通用：卡片内部按钮自动折行 */
+.custom-card {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 100%;
+}
+
+/* 窄屏：按钮撑满整行，卡片变块级 */
+@media (max-width: 768px) {
+
+    #skipControls,
+    #customControls {
+        flex-direction: column;
+    }
+
+    #btnAddSkipRule,
+    #btnAddCustom,
+    .custom-card {
+        width: 100%;
+        justify-content: space-between;
+        /* 让文字和按钮左右分开 */
+    }
+
+    .custom-card .btn-send,
+    .custom-card .btn-del,
+    .custom-card button[onclick] {
+        flex: 1 1 auto;
+        min-width: 48px;
+        /* 保证手指能点到 */
+    }
+}
+
+/* 跳过片头片尾 窄屏三行文字换行 */
+@media (max-width: 768px) {
+
+    /* 让卡片本身竖排 */
+    #skipRuleList .custom-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+    }
+
+    /* 文字区域单独占一行，并强制三段换行 */
+    #skipRuleList .custom-card label {
+        width: 100%;
+        white-space: normal;
+        /* 允许换行 */
+        display: block;
+        /* 块级，撑满宽度 */
+        line-height: 1.5;
+        color: var(--text-primary);
+    }
+
+    /* 把"|"替换成换行 */
+    #skipRuleList .custom-card label span {
+        display: block;
+    }
+
+    /* 按钮区依旧横向，平均分布 */
+    #skipRuleList .custom-card>div {
+        display: flex;
+        gap: 6px;
+        width: 100%;
+    }
+
+    #skipRuleList .custom-card button {
+        flex: 1;
+        min-width: 48px;
+    }
+}
+
+/* 页脚 */
+.page-footer {
+    margin-top: 40px;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-tertiary);
+}
+
+/* 回到顶部按钮 */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--accent-color);
+    color: var(--button-text);
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--shadow-hover);
+}
+
+.back-to-top:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+}
+
+/* 警告横幅 */
+#warnBanner {
+    background: var(--warn-bg);
+    color: var(--warn-text);
+    border-bottom: 1px solid var(--warn-border);
+}
+
+#warnBanner button {
+    color: var(--warn-text);
+}
+
+/* 主题切换按钮样式 */
+.theme-toggle-btn {
+    background: linear-gradient(45deg, #ffd700 50%, #4a4a4a 50%);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn::before {
+    content: "🌞";
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease;
+}
+
+.theme-toggle-btn::after {
+    content: "🌙";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+[data-theme="dark"] .theme-toggle-btn::before {
+    opacity: 0;
+}
+
+[data-theme="dark"] .theme-toggle-btn::after {
+    opacity: 1;
+}
+
+/* 自动模式指示器 */
+.auto-theme-indicator {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-left: 8px;
+}
+
+/* URL设置行 */
+.url-set-line {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.url-set-line label {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.url-set-line #customUrlInput {
+    flex: 1;
+    padding: 4px 6px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background: var(--input-bg);
+    color: var(--input-text);
+}
+
+.url-set-line #btnSetUrl {
+    white-space: nowrap;
+}

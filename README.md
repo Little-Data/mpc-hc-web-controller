@@ -8,7 +8,7 @@
 
 **因为我习惯使用MPC-BE，更多细节请到[MPC-BE 网页控制器](https://github.com/little-Data/mpc-be-web-controller)中查看，HC与BE绝大部分是相同的。**
 
-测试时的版本：2.6.0
+测试时的版本：2.6.1
 
 # 使用
 

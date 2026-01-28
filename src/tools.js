@@ -161,6 +161,7 @@ if (elClearBtn) {
             Object.values(STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
             localStorage.removeItem(CUSTOM_KEY);   // 自定义命令
             localStorage.removeItem(ThemeManager.STORAGE_KEY); // 主题设置
+            localStorage.removeItem('mediaControlEnabled'); // 媒体控制
             updateStatus('已清除本页 LocalStorage 数据，即将刷新页面。');
             location.reload();
         }

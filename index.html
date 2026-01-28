@@ -291,6 +291,7 @@
                 </div>
                 <button class="control-btn theme-toggle-btn" id="themeToggleBtn">☀️ 浅色模式</button>
                 <span class="auto-theme-indicator" id="autoThemeIndicator"></span>
+                <button class="control-btn media-control-btn enabled" id="btnToggleMediaControl">禁用媒体控制</button>
             </div>
 
         </div>
@@ -365,11 +366,15 @@
         </div>
         <!-- 回到顶部按钮 -->
         <button id="backToTop" class="back-to-top" title="回到顶部">↑</button>
+        <audio id="silentAudio" loop style="display:none">
+            <source src="src/silent_audio.mp4" type="video/mp4">
+        </audio>
         <footer class="page-footer">
             HAF半个水果 <a href="https://github.com/little-Data/mpc-hc-web-controller">https://github.com/little-Data/mpc-hc-web-controller</a>
         </footer>
         <script src="src/tools.js"></script>
         <script src="src/skip.js"></script>
+        <script src="src/media.js"></script>
     </div>
 </body>
 </html>

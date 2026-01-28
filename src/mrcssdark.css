@@ -289,3 +289,12 @@
         color: var(--input-text);
     }
 }
+
+/* 媒体控制 */
+[data-theme="dark"] .media-control-btn {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .media-control-btn.disabled {
+    opacity: 0.9;
+}

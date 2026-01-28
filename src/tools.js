@@ -1104,3 +1104,10 @@ window.onload = function() {
         restoreAllStates();
     }, 200); // 延迟恢复状态，确保所有元素都已加载
 };
+
+// 将配置暴露给 media.js 使用
+window.MPC_CONFIG = {
+    previewUrl: CONFIG.previewUrl,
+    controlApi: CONFIG.controlApi,
+    statusApi: CONFIG.statusApi
+};

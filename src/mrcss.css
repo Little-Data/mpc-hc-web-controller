@@ -1069,3 +1069,52 @@ body {
 .url-set-line #btnSetUrl {
     white-space: nowrap;
 }
+
+/* 媒体控制按钮样式 */
+.media-control-btn {
+    background: linear-gradient(45deg, #28a745 50%, #6c757d 50%);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .media-control-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.media-control-btn::before {
+    content: "✓";
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+}
+
+.media-control-btn::after {
+    content: "✕";
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+}
+
+/* 媒体控制禁用状态 */
+.media-control-btn.disabled {
+    background: linear-gradient(45deg, #6c757d 50%, #dc3545 50%);
+}
+
+.media-control-btn.disabled::before {
+    opacity: 0;
+}
+
+.media-control-btn.disabled::after {
+    opacity: 1;
+}

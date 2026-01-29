@@ -59,6 +59,7 @@
     let lastCoverUrl = '';       // 当前使用的封面URL
     let audioUnlocked = false;   // 音频是否已解锁（移动端需要）
     let lastDurationMs = 0;      // 上次有效的时长
+    let lastPreviewBaseUrl = null; // 上次使用的基础预览URL（用于检测地址变化）
     
     // 媒体控制开关状态（从LocalStorage读取，默认启用）
     let mediaControlEnabled = localStorage.getItem('mediaControlEnabled') !== 'false';
@@ -114,6 +115,14 @@
         const baseUrl = (window.MPC_CONFIG && window.MPC_CONFIG.previewUrl) 
             ? window.MPC_CONFIG.previewUrl 
             : (location.origin + "/snapshot.jpg");
+
+        // 检测预览基础URL是否发生变化
+        if (lastPreviewBaseUrl !== baseUrl) {
+            lastCoverUrl = '';
+            lastPreviewBaseUrl = baseUrl;
+            debug.log('预览基础URL已更新:', baseUrl);
+        }
+
         return `${baseUrl}?t=${Date.now()}`;
     }
 

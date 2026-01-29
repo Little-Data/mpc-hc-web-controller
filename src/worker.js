@@ -10,17 +10,17 @@ const state = {
 // 日志输出封装
 const debug = {
     log: function(...args) {
-        if (COVER_CONFIG.enableConsole) {
+        if (state.enableConsole) {
             console.log(...args);
         }
     },
     warn: function(...args) {
-        if (COVER_CONFIG.enableConsole) {
+        if (state.enableConsole) {
             console.warn(...args);
         }
     },
     error: function(...args) {
-        if (COVER_CONFIG.enableConsole) {
+        if (state.enableConsole) {
             console.error(...args);
         }
     }

@@ -9,17 +9,17 @@ const state = {
 // 日志输出封装
 const debug = {
     log: function(...args) {
-        if (COVER_CONFIG.enableConsole) {
+        if (state.enableConsole) {
             console.log(...args);
         }
     },
     warn: function(...args) {
-        if (COVER_CONFIG.enableConsole) {
+        if (state.enableConsole) {
             console.warn(...args);
         }
     },
     error: function(...args) {
-        if (COVER_CONFIG.enableConsole) {
+        if (state.enableConsole) {
             console.error(...args);
         }
     }
@@ -327,6 +327,22 @@ function restoreAllStates() {
     CONFIG.statusApi = `${savedAddress}/status.html`;
     CONFIG.previewUrl = `${savedAddress}/snapshot.jpg`;
     
+    // Worker 初始化后同步配置
+    if (mpcWorker) {
+        updateWorkerConfig({
+            statusApi: CONFIG.statusApi,
+            timeout: CONFIG.timeout,
+            interval: STATUS_UPDATE_INTERVAL
+        });
+    }
+
+    // 供 media.js 使用
+    window.MPC_CONFIG = {
+        previewUrl: CONFIG.previewUrl,
+        controlApi: CONFIG.controlApi,
+        statusApi: CONFIG.statusApi
+    };
+
     // 恢复各组折叠状态
     const groupStates = loadStateFromStorage(STORAGE_KEYS.groupFoldedStates, null);
     document.querySelectorAll('.control-group').forEach((group, index) => {
@@ -1216,6 +1232,20 @@ elBtnSetUrl.addEventListener('click', () => {
     CONFIG.previewUrl = `${base}/snapshot.jpg`;
 
     saveStateToStorage(STORAGE_KEYS.controlAddress, base); // 保存控制地址
+
+    // 同步更新 Worker 配置
+    updateWorkerConfig({
+        statusApi: CONFIG.statusApi,
+        timeout: CONFIG.timeout,
+        interval: STATUS_UPDATE_INTERVAL
+    });
+
+    // media.js 获取新地址
+    window.MPC_CONFIG = {
+        previewUrl: CONFIG.previewUrl,
+        controlApi: CONFIG.controlApi,
+        statusApi: CONFIG.statusApi
+    };
 
     // 重启状态刷新，让新地址立即生效
     if (el.autoUpdateStatus.checked) {

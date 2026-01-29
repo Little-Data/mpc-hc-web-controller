@@ -327,6 +327,15 @@ function restoreAllStates() {
     CONFIG.statusApi = `${savedAddress}/status.html`;
     CONFIG.previewUrl = `${savedAddress}/snapshot.jpg`;
     
+    // Worker 初始化后同步配置
+    if (mpcWorker) {
+        updateWorkerConfig({
+            statusApi: CONFIG.statusApi,
+            timeout: CONFIG.timeout,
+            interval: STATUS_UPDATE_INTERVAL
+        });
+    }
+
     // 恢复各组折叠状态
     const groupStates = loadStateFromStorage(STORAGE_KEYS.groupFoldedStates, null);
     document.querySelectorAll('.control-group').forEach((group, index) => {
@@ -1216,6 +1225,13 @@ elBtnSetUrl.addEventListener('click', () => {
     CONFIG.previewUrl = `${base}/snapshot.jpg`;
 
     saveStateToStorage(STORAGE_KEYS.controlAddress, base); // 保存控制地址
+
+    // 同步更新 Worker 配置
+    updateWorkerConfig({
+        statusApi: CONFIG.statusApi,
+        timeout: CONFIG.timeout,
+        interval: STATUS_UPDATE_INTERVAL
+    });
 
     // 重启状态刷新，让新地址立即生效
     if (el.autoUpdateStatus.checked) {

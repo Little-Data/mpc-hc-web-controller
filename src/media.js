@@ -512,12 +512,12 @@
     const originalRenderPlayStatus = window.renderPlayStatus;
 
     window.renderPlayStatus = function(data) {
-        // 先调用原始函数
-        if (typeof originalRenderPlayStatus === 'function') {
+        // 先调用原始函数（如果存在且不是当前函数）
+        if (originalRenderPlayStatus && originalRenderPlayStatus !== window.renderPlayStatus) {
             originalRenderPlayStatus(data);
         }
 
-        // 仅更新播放状态和进度，不更新封面
+        // 更新媒体会话（仅更新播放状态和进度，不更新封面）
         updateMediaSession(data);
 
         // 保存状态数据和时长

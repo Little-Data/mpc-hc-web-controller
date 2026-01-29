@@ -1,3 +1,189 @@
+/* Web Worker */
+let mpcWorker = null;
+let workerSupported = typeof Worker !== 'undefined';
+
+const state = {
+    enableConsole: false, // 是否显示控制台调试信息
+};
+
+// 日志输出封装
+const debug = {
+    log: function(...args) {
+        if (COVER_CONFIG.enableConsole) {
+            console.log(...args);
+        }
+    },
+    warn: function(...args) {
+        if (COVER_CONFIG.enableConsole) {
+            console.warn(...args);
+        }
+    },
+    error: function(...args) {
+        if (COVER_CONFIG.enableConsole) {
+            console.error(...args);
+        }
+    }
+};
+
+function startStatusUpdateLegacy() {
+    if (!statusTimer) {
+        getPlayStatus();
+        statusTimer = setInterval(getPlayStatus, STATUS_UPDATE_INTERVAL);
+    }
+}
+
+function stopStatusUpdateLegacy() {
+    if (statusTimer) {
+        clearInterval(statusTimer);
+        statusTimer = null;
+    }
+}
+
+/**
+ * 初始化 Web Worker
+ */
+function initWorker() {
+    if (!workerSupported) {
+        debug.warn('当前浏览器不支持 Web Worker，将使用传统模式');
+        return false;
+    }
+    
+    try {
+        // 创建 Worker
+        mpcWorker = new Worker('src/worker.js');
+        // 监听 Worker 消息
+        mpcWorker.onmessage = handleWorkerMessage;
+        mpcWorker.onerror = handleWorkerError;
+        
+        // 初始化 Worker 配置
+        mpcWorker.postMessage({
+            command: 'init',
+            data: {
+                config: {
+                    statusApi: CONFIG.statusApi,
+                    timeout: CONFIG.timeout,
+                    interval: STATUS_UPDATE_INTERVAL
+                }
+            }
+        });
+        
+        debug.log('Web Worker 已初始化');
+        return true;
+    } catch (e) {
+        debug.error('Worker 初始化失败:', e);
+        workerSupported = false;
+        return false;
+    }
+}
+
+/**
+ * 处理 Worker 消息
+ */
+function handleWorkerMessage(e) {
+    const { type, data, error, context, state } = e.data;
+    
+    switch (type) {
+        case 'status':
+            // 接收到状态数据，渲染到 DOM
+            if (data) {
+                renderPlayStatus(data);
+                
+                // 触发 skip.js 的跳过检查
+                if (typeof window.performSkipCheck === 'function') {
+                    window.performSkipCheck(data, sendControlCommand, sendProgressPercentRequest);
+                }
+                
+                // 触发 media.js 的媒体会话更新
+                if (typeof window.renderPlayStatus === 'function' && 
+                    window.renderPlayStatus !== renderPlayStatus) {
+                    // 如果 media.js 已覆盖，调用原始函数
+                }
+            }
+            break;
+            
+        case 'error':
+            debug.warn(`Worker [${context}] 错误:`, error);
+            if (context === 'fetch') {
+                updateStatus(`状态获取失败: ${error}`);
+            }
+            break;
+            
+        case 'state':
+            debug.log('Worker 状态:', state);
+            break;
+            
+        default:
+            debug.log('Worker 消息:', e.data);
+    }
+}
+
+/**
+ * 处理 Worker 错误
+ */
+function handleWorkerError(error) {
+    debug.error('Worker 错误:', error.message);
+    updateStatus('后台线程错误，已切换至兼容模式');
+    
+    // 降级处理：停止 Worker，使用传统模式
+    if (mpcWorker) {
+        mpcWorker.terminate();
+        mpcWorker = null;
+    }
+    workerSupported = false;
+    
+    // 自动切换到传统模式
+    startStatusUpdateLegacy();
+}
+
+/**
+ * 启动 Worker 状态更新
+ */
+startStatusUpdate = function() {
+    if (!mpcWorker && workerSupported) {
+        initWorker();
+    }
+    
+    if (mpcWorker) {
+        mpcWorker.postMessage({ command: 'start' });
+    } else {
+        startStatusUpdateLegacy();
+    }
+};
+
+/**
+ * 停止 Worker 状态更新
+ */
+stopStatusUpdate = function() {
+    if (mpcWorker) {
+        mpcWorker.postMessage({ command: 'stop' });
+    } else {
+        stopStatusUpdateLegacy();
+    }
+};
+
+/**
+ * 立即刷新一次（用于用户操作后）
+ */
+function refreshStatusImmediate() {
+    if (mpcWorker) {
+        mpcWorker.postMessage({ command: 'fetchOnce' });
+    } else {
+        getPlayStatus(); // 传统模式
+    }
+}
+
+/**
+ * 更新 Worker 配置（当用户修改设置时）
+ */
+function updateWorkerConfig(newConfig) {
+    if (mpcWorker) {
+        mpcWorker.postMessage({
+            command: 'updateConfig',
+            data: { config: newConfig }
+        });
+    }
+}
+
 // skip.js使用
 function timeStrToMs(str) {
   const p = str.split(':').map(Number);
@@ -61,6 +247,9 @@ const el = {
 let statusTimer = null;         // 状态刷新定时器
 let isDragging = false;         // 是否正在拖动进度条
 let isHoverProgress = false;    // 是否鼠标悬停在进度条区域
+let dragStartX = 0;             // 拖动起始X坐标
+let ignoreNextClick = false;    // 阻止点击传播
+const DRAG_THRESHOLD = 2;       // 拖动阈值（像素），小于该值视为点击而非拖动
 const STATUS_UPDATE_INTERVAL = 1000; // 抽离更新间隔
 
 /* ==========  LocalStorage 状态管理  ========== */
@@ -70,7 +259,7 @@ function saveStateToStorage(key, value) {
     try {
         localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
-        console.warn('无法保存到 LocalStorage:', e);
+        debug.warn('无法保存到 LocalStorage:', e);
     }
 }
 
@@ -80,7 +269,7 @@ function loadStateFromStorage(key, defaultValue) {
         const stored = localStorage.getItem(key);
         return stored ? JSON.parse(stored) : defaultValue;
     } catch (e) {
-        console.warn('无法从 LocalStorage 读取:', e);
+        debug.warn('无法从 LocalStorage 读取:', e);
         return defaultValue;
     }
 }
@@ -180,12 +369,21 @@ const preview = {
     ctrl: new AbortController()
 };
 
-// UTF8乱码解码（解决中文乱码）
+// UTF8解码
 function decodeUtf8(str) {
     try {
-        return decodeURIComponent(escape(str));
+        // 方法1：如果输入是 URL 编码的 UTF-8（标准情况）
+        return decodeURIComponent(str);
     } catch (e) {
-        return str;
+        // 方法2：处理 GBK 编码的中文
+        try {
+            // 将字符串转为字节数组，再用 GBK 解码
+            const bytes = new Uint8Array(str.split('').map(c => c.charCodeAt(0) & 0xFF));
+            return new TextDecoder('gbk').decode(bytes);
+        } catch (e2) {
+            // 解码失败返回原字符串
+            return str;
+        }
     }
 }
 
@@ -278,18 +476,8 @@ function renderPlayStatus(data) {
     el.filePath.textContent = currentFullPath;
     el.filePath.textContent = data.filePath;
     /* ---- 片头片尾跳过 ---- */
-    const skip = window.getSkipRuleFor?.(data.filePath);
-    if (skip && data.durMs && data.playStatus === '正在播放') {
-        const startMs = timeStrToMs(skip.start);
-        const endMs   = timeStrToMs(skip.end);
-        /* 播放刚刚开始：进度接近 0 且小于片头结束时间 → 直接跳转 */
-        if (data.posMs < 1000 && data.posMs < startMs) {
-        sendProgressPercentRequest((startMs / data.durMs) * 100);
-        }
-        /* 正常播放中：到达片尾开始时间 → 下一集 */
-        if (data.posMs >= endMs) {
-        sendControlCommand(920);   // 下一文件
-        }
+    if (typeof window.performSkipCheck === 'function') {
+    window.performSkipCheck(data, sendControlCommand, sendProgressPercentRequest);
     }
     /* 警告横幅*/
     if (!sessionStorage.getItem('_mpcWarnShown')) {
@@ -386,12 +574,6 @@ function loop(now) {
     }
     preview.frameId = requestAnimationFrame(loop);
 }
-// 启动实时状态更新
-function startStatusUpdate() {
-    stopStatusUpdate(); // 先停止原有定时器，避免重复创建
-    getPlayStatus(); // 立即执行一次，无需等待间隔
-    statusTimer = setInterval(getPlayStatus, STATUS_UPDATE_INTERVAL); // 使用全局间隔常量
-}
 
 // 勾选框事件监听
 el.autoUpdateStatus.addEventListener("change", function() {
@@ -402,14 +584,6 @@ el.autoUpdateStatus.addEventListener("change", function() {
     }
     saveStateToStorage(STORAGE_KEYS.autoUpdateStatus, this.checked); // 保存状态
 });
-
-// 停止实时状态更新
-function stopStatusUpdate() {
-    if (statusTimer) {
-        clearInterval(statusTimer);
-        statusTimer = null;
-    }
-}
 
 function togglePreview() {
     preview.active = el.previewSwitch.checked;
@@ -608,6 +782,8 @@ function handleProgressEvent(e) {
 // 进度条拖动/触摸开始：标记状态+阻止默认行为
 function handleProgressStart(e) {
     isDragging = true;
+    // 记录拖动起始X坐标
+    dragStartX = e.touches ? e.touches[0].clientX : e.clientX;
     e.preventDefault(); // 兼容移动：阻止触摸时页面滚动/缩放
     handleProgressEvent(e);
 }
@@ -618,10 +794,23 @@ function handleProgressEnd(e) {
     isDragging = false;
     // 兼容移动触摸结束：获取最后一个触摸点坐标
     const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    // 判断拖动位移是否超过阈值
+    const dragDistance = Math.abs(clientX - dragStartX);
+    if (dragDistance < DRAG_THRESHOLD) {
+        // 无效拖动，交给click事件处理，不发送请求
+        el.progressTooltip.style.display = "none";
+        return;
+    }
+
+    // 有效拖动，才计算百分比并发送请求
+    ignoreNextClick = true;
+    setTimeout(() => { ignoreNextClick = false; }, 50); // 50ms 后重置
+
     const trackRect = el.progressTrack.getBoundingClientRect();
     let percent = ((clientX - trackRect.left) / trackRect.width) * 100;
     percent = Math.max(0, Math.min(100, percent));
     sendProgressPercentRequest(percent);
+    
     // 拖动结束后隐藏提示框
     el.progressTooltip.style.display = "none";
 }
@@ -639,6 +828,10 @@ function handleProgressMouseLeave() {
 
 // 进度条单独点击事件（兼容快速点击，非拖动场景）
 function handleProgressTrackClick(e) {
+    if (ignoreNextClick) {
+        ignoreNextClick = false;
+        return;
+    }
     const trackRect = el.progressTrack.getBoundingClientRect();
     const percent = ((e.clientX - trackRect.left) / trackRect.width) * 100;
     const clampedPercent = Math.max(0, Math.min(100, percent));
@@ -664,7 +857,7 @@ function closePathModal() {
 function init() {
     // 预览开关绑定事件
     el.previewSwitch.addEventListener("change", togglePreview);
-    el.previewContainer.style.display = "none";
+    el.previewContainer.style.display = 'none';
 
     // 所有控制按钮绑定点击事件
     el.controlBtns.forEach(btn => {
@@ -677,10 +870,6 @@ function init() {
             sendControlCommand(command);
         });
     });
-
-    // 启动播放状态定时刷新
-    getPlayStatus();
-    statusTimer = setInterval(getPlayStatus, CONFIG.statusRefreshInterval);
 
     // 时间跳转按钮绑定点击事件
     document.getElementById('jumpTimeBtn').addEventListener('click', () => {
@@ -745,6 +934,14 @@ window.onbeforeunload = function() {
     // 移除ESC键事件
     document.removeEventListener('keydown', closePathModal);
 };
+
+// 在页面卸载时清理 Worker
+window.addEventListener('beforeunload', () => {
+    if (mpcWorker) {
+        mpcWorker.terminate();
+        mpcWorker = null;
+    }
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   const btnCollapseAll = document.getElementById("btnCollapseAll");

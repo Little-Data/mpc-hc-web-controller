@@ -336,6 +336,13 @@ function restoreAllStates() {
         });
     }
 
+    // 供 media.js 使用
+    window.MPC_CONFIG = {
+        previewUrl: CONFIG.previewUrl,
+        controlApi: CONFIG.controlApi,
+        statusApi: CONFIG.statusApi
+    };
+
     // 恢复各组折叠状态
     const groupStates = loadStateFromStorage(STORAGE_KEYS.groupFoldedStates, null);
     document.querySelectorAll('.control-group').forEach((group, index) => {
@@ -1232,6 +1239,13 @@ elBtnSetUrl.addEventListener('click', () => {
         timeout: CONFIG.timeout,
         interval: STATUS_UPDATE_INTERVAL
     });
+
+    // media.js 获取新地址
+    window.MPC_CONFIG = {
+        previewUrl: CONFIG.previewUrl,
+        controlApi: CONFIG.controlApi,
+        statusApi: CONFIG.statusApi
+    };
 
     // 重启状态刷新，让新地址立即生效
     if (el.autoUpdateStatus.checked) {

@@ -275,7 +275,9 @@
         if (fileName !== currentFileName) {
             debug.log('文件变化:', currentFileName, '->', fileName);
             currentFileName = fileName;
-            setMetadata(fileName, folderPath, data.windowTitle, false);
+            // 文件切换时强制生成新封面URL，确保媒体控制能识别到新内容
+            lastCoverUrl = '';
+            setMetadata(fileName, folderPath, data.windowTitle, true);
         }
 
         // metadata从未设置过时，初始化一次
